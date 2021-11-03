@@ -1,0 +1,28 @@
+@page "/"
+@inject NavigationManager NavigationManager
+<div align="center">
+    <div class="card card-has-bg "  style="background-image: url(https://i.imgur.com/PppdzrD.png); width: 25rem">
+        <img class="card-img" src="https://i.imgur.com/PppdzrD.png" alt="Card image">
+        <div class="card-img-overlay">
+            <div class="card-header">
+                <h1 >Assigment 2</h1>
+            </div>
+            <div class="card-body">
+                <AuthorizeView>
+                    <h5 class="card-title">Hello  </h5>
+                </AuthorizeView>
+                <a @onclick="GoToPersons" class="btn btn-outline-dark">See List</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@code
+{
+    private void GoToPersons()
+    {
+        NavigationManager.NavigateTo("/Persons");
+    }
+}

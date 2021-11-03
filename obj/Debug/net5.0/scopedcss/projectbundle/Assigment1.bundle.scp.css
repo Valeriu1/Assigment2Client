@@ -1,0 +1,171 @@
+@import '';
+
+/* _content/Assigment1/Shared/MainLayout.razor.rz.scp.css */
+.page[b-nxdgckodia] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.main[b-nxdgckodia] {
+    flex: 1;
+}
+/*I went a bit far with this one, but I do not regret anything
+I mean the animation of the sidebar and top-row*/
+
+@keyframes example-b-nxdgckodia {
+    0% {    background-image: linear-gradient(180deg, pink 0%,rgb(22, 173, 180) 5%, rgb(98, 190, 195) 40%,  rgb(255, 255, 255) 60%,pink 75%);}
+    50%{ background-image: linear-gradient(180deg,pink 0%,deepskyblue 100%)}
+    100% {background-image: linear-gradient(180deg, pink 0%, rgb(98, 190, 195) 40%,navajowhite 50%,pink 75%)}
+}
+.sidebar[b-nxdgckodia] {
+    background: linear-gradient(0deg, rgba(22, 173, 180, 0.2) 0%, rgba(22, 173, 180, 1) 100%);
+   
+
+}
+.sidebar:hover[b-nxdgckodia]{
+    background: linear-gradient(0deg, rgba(22, 173, 180, 0.2) 0%, rgba(22, 173, 180, 1) 100%);
+    animation-name: example-b-nxdgckodia;
+    animation-duration: 5ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.2,-2,0.8,2);
+
+}
+@keyframes exampleV2-b-nxdgckodia {
+    0% {    background-image: linear-gradient(90deg, pink 0%,rgb(22, 173, 180) 5%, rgb(98, 190, 195) 40%,  rgb(255, 255, 255) 60%,pink 75%);}
+    50%{ background-image: linear-gradient(135deg,pink 0%,deepskyblue 100%)}
+    100% {background-image: linear-gradient(215deg, pink 0%, rgb(98, 190, 195) 40%,navajowhite 50%,pink 75%)}
+}
+
+
+.top-row[b-nxdgckodia] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+   
+
+}
+.top-row:hover[b-nxdgckodia] {
+    background-color: #f7f7f7;
+    animation-name: exampleV2-b-nxdgckodia;
+    animation-duration: 5ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+
+
+
+}
+
+    .top-row[b-nxdgckodia]  a, .top-row .btn-link[b-nxdgckodia] {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+    }
+
+    .top-row a:first-child[b-nxdgckodia] {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth)[b-nxdgckodia] {
+        display: none;
+    }
+
+    .top-row.auth[b-nxdgckodia] {
+        justify-content: space-between;
+    }
+
+    .top-row a[b-nxdgckodia], .top-row .btn-link[b-nxdgckodia] {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-nxdgckodia] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-nxdgckodia] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-nxdgckodia] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .main > div[b-nxdgckodia] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+/* _content/Assigment1/Shared/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-kwy3fzylnx] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row[b-kwy3fzylnx] {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-kwy3fzylnx] {
+    font-size: 1.1rem;
+}
+
+.oi[b-kwy3fzylnx] {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item[b-kwy3fzylnx] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-kwy3fzylnx] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-kwy3fzylnx] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-kwy3fzylnx]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-kwy3fzylnx]  a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item[b-kwy3fzylnx]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-kwy3fzylnx] {
+        display: none;
+    }
+
+    .collapse[b-kwy3fzylnx] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}

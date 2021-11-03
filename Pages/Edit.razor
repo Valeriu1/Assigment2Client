@@ -1,0 +1,91 @@
+﻿@page "/Edit/{Id:int}"
+@using Models
+@using Assigment1.Data
+@inject IPersonsService personsService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+<h3>Edit</h3>
+
+<EditForm Model="@personToEdit" OnValidSubmit="@Save">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="form-group">
+        First Name:<br/>
+        <InputText @bind-Value="personToEdit.FirstName"/>
+    </div>
+    <div class="form-group">
+        Last Name:<br/>
+        <InputText @bind-Value="personToEdit.LastName"/>
+    </div>
+    <div class="form-group">
+        Hair color:<br/>
+        <InputText @bind-Value="personToEdit.HairColor"/>
+    </div>
+    <div class="form-group">
+        Eye color:<br/>
+        <InputText @bind-Value="personToEdit.EyeColor"/>
+    </div>
+    <div class="form-group">
+        Age:<br/>
+        <InputNumber @bind-Value="personToEdit.Age"/>
+    </div>
+    <div class="form-group">
+        Weigth:<br/>
+        <InputNumber @bind-Value="personToEdit.Weight"/>
+    </div>
+    <div class="form-group">
+        Height:<br/>
+        <InputNumber @bind-Value="personToEdit.Height"/>
+    </div>
+    <div class="form-group">
+        Sex:<br/>
+        <InputRadioGroup Name="sex" @bind-Value="personToEdit.Sex">
+            <InputRadio Name="sex" Value="@("M")"/>Male
+            <InputRadio Name="sex" Value="@("F")"/>Female
+        </InputRadioGroup>
+
+    </div>
+    <div class="form-group">
+        Job Title:<br/>
+        <InputText @bind-Value="jobToEdit.JobTitle"/>
+    </div>
+    <div class="form-group">
+        Salary:<br/>
+        <InputNumber @bind-Value="jobToEdit.Salary"/>
+    </div>
+    <p class="actions">
+        <button class="btn btn-outline-dark">Save</button>
+    </p>
+
+
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    
+    private Adult personToEdit = new Adult();
+
+    private Job jobToEdit = new Job();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        personToEdit = await personsService.GetAsync(Id);
+        jobToEdit = personToEdit.JobTitle;
+    }
+
+    private async Task Save()
+    {
+        personToEdit.JobTitle = jobToEdit;
+        try
+        {
+            await  personsService.UpdateAsync(personToEdit);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        NavigationManager.NavigateTo("/Persons");
+    }
+}

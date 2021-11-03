@@ -1,0 +1,155 @@
+﻿@page "/Persons"
+@using Models
+@using Assigment1.Data
+@inject IPersonsService personsService
+@inject NavigationManager NavigationManager
+<h3>Persons list</h3>
+<div class="form-group">
+    <input class="form-control" type="text" placeholder="Filter by name..."
+           @bind="Filter"
+           @bind:event="oninput">
+</div>
+
+@if (adultsToShow == null)
+{
+    <p>
+        <em>Loadind...</em>
+    </p>
+}
+else if (!adultsToShow.Any())
+{
+    <p>
+        <em> No items exist. Please add some.</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Hair Color</th>
+            <th>Eye Color</th>
+            <th>Age</th>
+            <th>Weight</th>
+            <th>Height</th>
+            <th>Sex</th>
+            <th>Job Title</th>
+            <th>Salary</th>
+            <AuthorizeView>
+                <th>Edit</th>
+                <th>Remove</th>
+            </AuthorizeView>
+        </tr>
+        </thead>
+        
+        <tbody>
+        @foreach (var item in adultsToShow)
+        {
+            if (!IsVisible(item))
+            continue;
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.FirstName @item.LastName</td>
+                <td>@item.HairColor</td>
+                <td>@item.EyeColor</td>
+                <td>@item.Age</td>
+                <td>@item.Weight</td>
+                <td>@item.Height</td>
+                <td>@item.Sex</td>
+                <td>@item.JobTitle.JobTitle</td>
+                <td>@item.JobTitle.Salary</td>
+                @* <td> *@
+                @*     <input type="checkbox" checked=@item.IsCompleted @onchange="@((arg)=> CompletedChange(arg, item))"/> *@
+                @* </td> *@
+
+                <AuthorizeView>
+                    <td>
+                        <button class="btn btn-outline-light" @onclick="@(() => Edit(item.Id))">
+                            <i class="oi oi-pencil" style="color: #005cbf"/>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-light" @onclick="@(() => RemovePerson(item.Id))">
+                            <i class="oi oi-trash" style="color: red"/>
+                        </button>
+                    </td>
+                </AuthorizeView>
+
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IList<Adult> adultsToShow;
+    private IList<Adult> allAdults;
+
+    private string Filter { get; set; }
+
+    private bool IsVisible(Adult adult)
+    {
+        if (string.IsNullOrEmpty(Filter))
+            return true;
+
+        if (adult.FirstName != null && adult.FirstName.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if (adult.LastName != null && adult.LastName.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+
+        return false;
+    }
+
+
+    // Not that graceful
+
+    // private string? filterByName;
+    //
+    // private void FilterByName(ChangeEventArgs changeEventArgs)
+    // {
+    //     filterByName = null;
+    //     try
+    //     {
+    //         filterByName = changeEventArgs.Value.ToString();
+    //     }
+    //     catch (Exception e)
+    //     {
+    //     }
+    //     ExecuteFilter();
+    //
+    // }
+    //
+    // private void ExecuteFilter()
+    // {
+    //     adultsToShow = allAdults.Where(t => (filterByName != null && t.FirstName == filterByName || filterByName == null)).ToList(); 
+    //                                       //   &&
+    //                                       // (filterByIsCompleted != null && t.IsCompleted == filterByIsCompleted || filterByIsCompleted == null))
+    //     
+    // }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Filter = "";
+        allAdults = await personsService.GetPersonsAsync();
+        adultsToShow = allAdults;
+    }
+
+    private void Edit(int id)
+    {
+        NavigationManager.NavigateTo($"Edit/{id}");
+    }
+
+    private void RemovePerson(int personId)
+    {
+        Adult personToRemove = allAdults.First(t => t.Id == personId);
+        personsService.RemovePersonAsync(personId);
+        allAdults.Remove(personToRemove);
+        adultsToShow.Remove(personToRemove);
+    }
+
+    
+}

@@ -1,0 +1,74 @@
+﻿@page "/Add"
+@using Assigment1.Data
+@using Models
+@inject IPersonsService PersonsService
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+<h3>Add</h3>
+<EditForm Model="@newPersonItem" OnValidSubmit="@AddNewPerson">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="form-group">
+        First Name:<br/>
+        <InputText @bind-Value="newPersonItem.FirstName"/>
+    </div>
+    <div class="form-group">
+        Last Name:<br/>
+        <InputText @bind-Value="newPersonItem.LastName"/>
+    </div>
+    <div class="form-group">
+        Hair color:<br/>
+        <InputText @bind-Value="newPersonItem.HairColor"/>
+    </div>
+    <div class="form-group">
+        Eye color:<br/>
+        <InputText @bind-Value="newPersonItem.EyeColor"/>
+    </div>
+    <div class="form-group">
+        Age:<br/>
+        <InputNumber @bind-Value="newPersonItem.Age"/>
+    </div>
+    <div class="form-group">
+        Weigth:<br/>
+        <InputNumber @bind-Value="newPersonItem.Weight"/>
+    </div>
+    <div class="form-group">
+        Height:<br/>
+        <InputNumber @bind-Value="newPersonItem.Height"/>
+    </div>
+    <div class="form-group">
+        Sex:<br/>
+        <InputRadioGroup Name="sex" @bind-Value="newPersonItem.Sex">
+            <InputRadio Name="sex" Value="@("M")"/>Male
+            <InputRadio Name="sex" Value="@("F")"/>Female
+        </InputRadioGroup>
+
+    </div>
+    <div class="form-group">
+        Job Title:<br/>
+        <InputText @bind-Value="newJobItem.JobTitle"/>
+    </div>
+    <div class="form-group">
+        Salary:<br/>
+        <InputNumber @bind-Value="newJobItem.Salary"/>
+    </div>
+    <p class="actions">
+        <button class="btn btn-outline-dark">Create</button>
+    </p>
+
+
+</EditForm>
+
+@code {
+    private Adult newPersonItem = new Adult();
+
+    private Job newJobItem = new Job();
+
+    private void AddNewPerson()
+    {
+        newPersonItem.JobTitle = newJobItem;
+        PersonsService.AddPersonAsync(newPersonItem);
+        NavigationManager.NavigateTo("/Persons");
+    }
+
+}
